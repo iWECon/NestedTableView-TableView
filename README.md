@@ -2,9 +2,7 @@
 Cell中加入TableView 多重TableView
 
 
-/**
-    重新计算整个视图大小
-    */
+    //重新计算整个视图大小
     func resetCellSize() {
         // 默认每个cell的高度为44
         let cellHeight = 44

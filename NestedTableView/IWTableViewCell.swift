@@ -16,17 +16,16 @@ protocol HandlePreviousCellHeightDelegate {
 }
 
 class IWTableViewCell: UITableViewCell {
-    
+    // 代理
     var setHeightDelegate: HandlePreviousCellHeightDelegate!
     var previousTableView: UITableView!
     
-    var previousData: NSArray! {
-        
+    var previousData: NSArray? {
+        // set后刷新列表并计算父Cell高度
         didSet {
             self.iwTableView.reloadData()
             self.resetCellSize()
         }
-        
     }
 
     lazy var iwTableView: UITableView = {
@@ -90,16 +89,26 @@ class IWTableViewCell: UITableViewCell {
 extension IWTableViewCell: UITableViewDataSource {
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // 最多返回5行 因为只有最多只有5行数据! 可以自己添加修改数据, 在ViewController中的iwDatas
-        return 1;
+        /*
+         这个地方没有OC好玩, OC识别为nib时不会崩溃,直接返回0。 
+         Swift直接崩溃, 所以做个判断
+        
+         此处将previousData改成了Option数据, 第一次加载列表的时候, previousData还未有数据, 所以返回0行, previousData写入数据后会自动刷新列表, 再返回count
+        */
+        if previousData == nil {
+            return 0
+        }
+        return previousData!.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! IWETableViewCell
         
+        // 防止previousData数据为空崩溃
         if previousData != nil {
-            cell.textLabel?.text = previousData[indexPath.row] as? String
+            cell.textLabel?.text = previousData![indexPath.row] as? String
         }
+        
         return cell;
     }
 }

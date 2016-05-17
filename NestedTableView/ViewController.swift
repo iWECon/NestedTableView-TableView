@@ -12,14 +12,7 @@ class ViewController: UIViewController, HandlePreviousCellHeightDelegate {
 
     @IBOutlet weak var iWTableView: UITableView!
     
-    lazy var iwDatas: NSMutableArray = {
-        let arr = NSMutableArray(array: [["1","2","3","4","5"],
-            ["一", "二", "三", "四", "五"],
-            ["i", "w", "e", "c", "o"],
-            ["r", "t", "y", "f", "t"],
-            ["a", "s", "d", "b", "l"]])
-        return arr
-    }()
+    lazy var iwDatas: NSArray = [["1","2","3"], ["一"], ["i", "w", "e"], ["r", "t", "y"], ["a", "s", "d", "b"]]
     
     var cellHeight: CGFloat?
     
@@ -57,12 +50,17 @@ extension ViewController: UITableViewDelegate {
 
 extension ViewController: UITableViewDataSource {
     
+    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 5
+        // 这里返回节!!!!!!
+        return iwDatas.count;
     }
     
+    // 父TableView中的每节只需要一个Cell ！ 子TableView会嵌套在此Cell中
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        
+        // WARN: 此处只需要返回一个Cell即可
+        return 1;
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -75,8 +73,7 @@ extension ViewController: UITableViewDataSource {
             cell.previousTableView = self.iWTableView
         }
         
-        cell.previousData = iwDatas[indexPath.section] as! NSArray
-        
+        cell.previousData = (iwDatas[indexPath.section] as! NSArray)
         
         return cell
     }

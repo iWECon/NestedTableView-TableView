@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, setPreviousCellHeightDelegate {
+class ViewController: UIViewController, HandlePreviousCellHeightDelegate {
 
     @IBOutlet weak var iWTableView: UITableView!
     
@@ -62,7 +62,7 @@ extension ViewController: UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return 2
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {

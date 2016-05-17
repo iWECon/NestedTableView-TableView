@@ -11,13 +11,13 @@ import UIKit
 /**
  *  处理父cell的height
  */
-protocol setPreviousCellHeightDelegate {
+protocol HandlePreviousCellHeightDelegate {
     func setCellHeight(height: CGFloat, indexPath: NSIndexPath?)
 }
 
 class IWTableViewCell: UITableViewCell {
     
-    var setHeightDelegate: setPreviousCellHeightDelegate!
+    var setHeightDelegate: HandlePreviousCellHeightDelegate!
     var previousTableView: UITableView!
     
     var previousData: NSArray! {
@@ -53,7 +53,7 @@ class IWTableViewCell: UITableViewCell {
     
     
     /**
-    重新计算整个视图大小
+    重新计算整个视图大小, 计算父TableViewCell的大小
     */
     func resetCellSize() {
         // 默认每个cell的高度为44
